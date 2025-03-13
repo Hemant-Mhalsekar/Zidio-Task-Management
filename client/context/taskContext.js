@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { createContext, useEffect } from "react";
 import { useUserContext } from "./userContext";
 import toast from "react-hot-toast";
+import { p } from "framer-motion/client";
 
 const TasksContext = createContext();
 
@@ -13,6 +14,37 @@ export const TasksProvider = ({ children }) => {
   const [tasks, setTasks] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [task, setTask] = React.useState({});
+
+  const [isEditing, setIsEditing] = React.useState(false);
+  const [priority, setPriority] = React.useState("all");
+  const [activeTask, setActiveTask] = React.useState(null);
+  const [modalMode, setModalMode] = React.useState("");
+  const [profileModal, setProfileModal] = React.useState(false);
+
+
+  const openModalForAdd = () => {
+    setModalMode("add");
+    setIsEditing(true);
+    setTask({});
+  };
+
+  const openModalForEdit = (task) => {
+    setModalMode("edit");
+    setIsEditing(true);
+    setActiveTask(task);
+  };
+
+  const openProfileModal = () => {
+    setProfileModal(true);
+  };
+
+  const closeModal = () => {
+    setIsEditing(false);
+    setProfileModal(false);
+    setModalMode("");
+    setActiveTask(null);
+    setTask({});
+  };
 
   // get tasks
   const getTasks = async () => {
@@ -110,7 +142,19 @@ export const TasksProvider = ({ children }) => {
         getTask,
         createTask,
         updateTask,
-        deleteTask
+        deleteTask,
+        priority,
+        setPriority,
+        handleInput,
+        isEditing,
+        setIsEditing,
+        openModalForAdd,
+        openModalForEdit,
+        activeTask,
+        closeModal,
+        modalMode,
+        openProfileModal,
+        profileModal,
       }}
     >
       {children}
