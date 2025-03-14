@@ -6,7 +6,7 @@ import { p } from "framer-motion/client";
 
 const TasksContext = createContext();
 
-const serverUrl = "https://localhost:8000/api/v1";
+const serverUrl = "https://zidio-task-management.onrender.com";
 
 export const TasksProvider = ({ children }) => {
   const userId = useUserContext().user._id;
